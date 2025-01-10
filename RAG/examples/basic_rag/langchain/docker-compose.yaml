@@ -115,3 +115,6 @@ milvus:
 networks:
   default:
     name: nvidia-rag
+
+volumes:
+  milvus_data:
