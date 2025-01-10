@@ -91,6 +91,26 @@ services:
     - "8090"
     depends_on:
     - chain-server
+    
+milvus:
+    container_name: milvus-standalone
+    image: milvusdb/milvus-standalone:latest
+    environment:
+      NVIDIA_VISIBLE_DEVICES: none  # Disable GPU support
+    ports:
+      - "19530:19530"
+    volumes:
+      - milvus_data:/var/lib/milvus
+
+  otel-collector:
+    container_name: otel-collector
+    image: otel/opentelemetry-collector-contrib:latest
+    command: ["--config=/etc/otel-collector-config.yaml"]
+    volumes:
+      - ./otel-collector-config.yaml:/etc/otel-collector-config.yaml
+    ports:
+      - "4317:4317"
+    
 
 networks:
   default:
